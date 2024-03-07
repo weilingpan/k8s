@@ -1,0 +1,29 @@
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kube-prometheus-stack
+    meta.helm.sh/release-namespace: monitoring
+  labels:
+    app: fastapi-example
+    app.kubernetes.io/instance: kube-prometheus-stack
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    app.kubernetes.io/version: 56.8.2
+    chart: kube-prometheus-stack-56.8.2
+    heritage: Helm
+    release: kube-prometheus-stack
+  name: fastapi-example-exporter
+  namespace: monitoring
+spec:
+  endpoints:
+    - interval: 30s
+      port: metrics
+  jobLabel: component
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      module: fastapi-example

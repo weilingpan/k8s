@@ -1,0 +1,7 @@
+name: myenv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - prometheus-fastapi-instrumentator
+  - uvicorn
