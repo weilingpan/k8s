@@ -1,11 +1,21 @@
 import uvicorn
-from fastapi import FastAPI
-from prometheus_fastapi_instrumentator import Instrumentator
+from fastapi import FastAPI, Response
+# from prometheus_fastapi_instrumentator import Instrumentator
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+
+from middleware import PrometheusMiddleware, metrics
 
 app = FastAPI()
 
 # Setup Prometheus metrics
-Instrumentator().instrument(app).expose(app)
+# Instrumentator().instrument(app).expose(app)
+
+# Setting metrics middleware
+app.add_middleware(PrometheusMiddleware, app_name="myfastapi")
+
+@app.get('/metrics')
+async def metrics():
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 @app.get("/hello")
 async def root():

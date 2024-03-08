@@ -5,3 +5,7 @@ channels:
 dependencies:
   - prometheus-fastapi-instrumentator
   - uvicorn
+  - opentelemetry-distro
+  - opentelemetry-instrumentation-fastapi
+  - opentelemetry-instrumentation-logging
+  - opentelemetry-exporter-otlp
