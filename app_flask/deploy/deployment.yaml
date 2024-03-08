@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-prometheus-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-prometheus-example
+  template:
+    metadata:
+      labels:
+        app: flask-prometheus-example
+    spec:
+      containers:
+      - name: flask-prometheus-example
+        image: flask-prometheus-example:latest
+        imagePullPolicy: Never  # Set imagePullPolicy to Never
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-prometheus-example-clusterip
+spec:
+  selector:
+    app: flask-prometheus-example
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-prometheus-example-nodeport
+  labels:
+    app.kubernetes.io/instance: flask-example
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: flask-example
+    module: flask-example
+spec:
+  selector:
+    app: flask-prometheus-example
+  ports:
+    - name: metrics
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30391
+  type: NodePort
+
