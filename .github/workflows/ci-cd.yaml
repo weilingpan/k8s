@@ -16,10 +16,11 @@ jobs:
       run: |
         echo $MY_VAR $FIRST_NAME.
 
-    - name: Print commit ID
-      run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_HASH
-
-
+    - name: Show GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+      
   build:
     runs-on: ubuntu-latest
     defaults:
