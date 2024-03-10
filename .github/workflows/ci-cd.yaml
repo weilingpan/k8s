@@ -17,7 +17,7 @@ jobs:
         echo $MY_VAR $FIRST_NAME.
 
     - name: Print commit ID
-      run: echo "Commit ID is ${{ steps.commit_id.outputs.commit_id }}"
+      run: echo "Commit ID is $(git rev-parse HEAD)"
 
   build:
     runs-on: ubuntu-latest
@@ -41,4 +41,4 @@ jobs:
         push: true
         context: "{{defaultContext}}:app_fastapi"
         file: Dockerfile
-        tags: 2108248/github-images:fastapi.${{ steps.commit_id.outputs.commit_id }}
+        tags: 2108248/github-images:fastapi.$(git rev-parse HEAD)
