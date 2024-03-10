@@ -44,4 +44,4 @@ jobs:
         push: true
         context: "{{defaultContext}}:app_fastapi"
         file: Dockerfile
-        tags: 2108248/github-images:fastapi.test
+        tags: 2108248/github-images:fastapi.${{ github.sha }}
