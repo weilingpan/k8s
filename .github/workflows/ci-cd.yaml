@@ -20,10 +20,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: check dir
-      run: pwd && ls
+      run: pwd
+    - name: list dir
+      run: ls
     - name: set working dir
-      run: cd ./app_fastapi
-      working-directory: ./app_fastapi
+      run: cd app_fastapi
+      working-directory: app_fastapi
     - name: check dir
       run: pwd && ls
     - name: Login to Docker Hub
