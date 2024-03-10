@@ -284,9 +284,6 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -294,13 +291,10 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
+          "unit": "short",
           "unitScale": true
         },
         "overrides": []
@@ -311,7 +305,7 @@
         "x": 0,
         "y": 6
       },
-      "id": 22,
+      "id": 23,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -338,6 +332,8 @@
           "editorMode": "code",
           "exemplar": true,
           "expr": "my_exceptions_total{app_name=\"$app_name\"}",
+          "hide": false,
+          "instant": true,
           "interval": "",
           "legendFormat": "",
           "range": true,
@@ -346,6 +342,23 @@
       ],
       "timeFrom": "24h",
       "title": "Total Exceptions",
+      "transformations": [
+        {
+          "id": "seriesToRows",
+          "options": {}
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Time"
+              }
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -1121,7 +1134,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "",
           "value": ""
         },
@@ -1143,13 +1156,13 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "FastAPI&Flask Observability",
   "uid": "fastapi-observability",
-  "version": 25,
+  "version": 28,
   "weekStart": ""
 }
