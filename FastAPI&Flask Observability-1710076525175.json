@@ -83,7 +83,8 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(fastapi_requests_total{app_name=\"$app_name\", path!=\"/metrics\"})",
+          "expr": "sum(my_requests_total{app_name=\"$app_name\", path!=\"/metrics\"})",
+          "hide": false,
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -166,7 +167,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "fastapi_requests_total{app_name=\"$app_name\", path!=\"/metrics\"}",
+          "expr": "my_requests_total{app_name=\"$app_name\", path!=\"/metrics\"}",
           "instant": true,
           "interval": "",
           "legendFormat": "{{method}} {{path}}",
@@ -264,10 +265,12 @@
             "type": "prometheus",
             "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "fastapi_requests_duration_seconds_sum{app_name=\"$app_name\"} / fastapi_requests_duration_seconds_count{app_name=\"$app_name\"}",
+          "expr": "my_requests_duration_seconds_sum{app_name=\"$app_name\"} / my_requests_duration_seconds_count{app_name=\"$app_name\"}",
           "interval": "",
           "legendFormat": "{{method}} {{path}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -334,7 +337,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "fastapi_exceptions_total{app_name=\"$app_name\"}",
+          "expr": "my_exceptions_total{app_name=\"$app_name\"}",
           "interval": "",
           "legendFormat": "",
           "range": true,
@@ -434,10 +437,12 @@
             "type": "prometheus",
             "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(path) (fastapi_responses_total{app_name=\"$app_name\", status_code=~\"2.*\", path!=\"/metrics\"}) / sum by(path) (fastapi_responses_total{app_name=\"$app_name\", path!=\"/metrics\"})",
+          "expr": "sum by(path) (my_responses_total{app_name=\"$app_name\", status_code=~\"2.*\", path!=\"/metrics\"}) / sum by(path) (my_responses_total{app_name=\"$app_name\", path!=\"/metrics\"})",
           "interval": "",
           "legendFormat": "{{path}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -531,10 +536,12 @@
             "type": "prometheus",
             "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(path) (fastapi_responses_total{app_name=\"$app_name\", status_code=~\"5.*\", path!=\"/metrics\"}) / sum by(path) (fastapi_responses_total{app_name=\"$app_name\", path!=\"/metrics\"})",
+          "expr": "sum by(path) (my_responses_total{app_name=\"$app_name\", status_code=~\"5.*\", path!=\"/metrics\"}) / sum by(path) (my_responses_total{app_name=\"$app_name\", path!=\"/metrics\"})",
           "interval": "",
           "legendFormat": "{{path}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -631,115 +638,16 @@
             "type": "prometheus",
             "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "histogram_quantile(.99,sum(rate(fastapi_requests_duration_seconds_bucket{app_name=\"$app_name\", path!=\"/metrics\"}[1m])) by(path, le))",
+          "expr": "histogram_quantile(.99,sum(rate(my_requests_duration_seconds_bucket{app_name=\"$app_name\", path!=\"/metrics\"}[1m])) by(path, le))",
           "interval": "",
           "legendFormat": "{{path}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "PR 99 Requests Duration",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "reqps",
-          "unitScale": true
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 15,
-        "x": 8,
-        "y": 13
-      },
-      "id": 12,
-      "options": {
-        "legend": {
-          "calcs": [
-            "last",
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
-          },
-          "exemplar": true,
-          "expr": "rate(fastapi_requests_total{app_name=\"$app_name\"}[1m])",
-          "interval": "",
-          "legendFormat": "{{path}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Request Per Sec",
       "type": "timeseries"
     },
     {
@@ -805,8 +713,8 @@
       "gridPos": {
         "h": 8,
         "w": 8,
-        "x": 0,
-        "y": 21
+        "x": 8,
+        "y": 13
       },
       "id": 10,
       "options": {
@@ -827,14 +735,119 @@
             "type": "prometheus",
             "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "fastapi_requests_in_progress{app_name=\"$app_name\", path!=\"/metrics\"}",
+          "expr": "my_requests_in_progress{app_name=\"$app_name\", path!=\"/metrics\"}",
           "interval": "",
           "legendFormat": "{{path}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "Request In Process",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "reqps",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 13
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last",
+            "min",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "rate(my_requests_total{app_name=\"$app_name\"}[1m])",
+          "interval": "",
+          "legendFormat": "{{path}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Request Per Sec",
       "type": "timeseries"
     },
     {
@@ -947,7 +960,7 @@
         "h": 9,
         "w": 6,
         "x": 0,
-        "y": 29
+        "y": 21
       },
       "id": 14,
       "options": {
@@ -970,7 +983,7 @@
             "uid": "P8E80F9AEF21F6940"
           },
           "editorMode": "code",
-          "expr": "sum by(type) (rate({job=\"default/fastapi-prometheus-example\"}  |= \"$log_keyword\" [1m]))",
+          "expr": "sum by(type) (rate({pod=\"$pod\"}  |= \"$log_keyword\" [1m]))",
           "legendFormat": "{{type}}",
           "queryType": "range",
           "refId": "A"
@@ -988,7 +1001,7 @@
         "h": 9,
         "w": 18,
         "x": 6,
-        "y": 29
+        "y": 21
       },
       "id": 2,
       "options": {
@@ -1009,13 +1022,13 @@
             "uid": "P8E80F9AEF21F6940"
           },
           "editorMode": "code",
-          "expr": "{job=\"default/fastapi-prometheus-example\"} |= \"$log_keyword\"",
+          "expr": "{pod=\"$pod\"} |= \"$log_keyword\"",
           "hide": false,
           "queryType": "range",
           "refId": "A"
         }
       ],
-      "title": "Log of All FastAPI App",
+      "title": "Log of All API App",
       "type": "logs"
     }
   ],
@@ -1026,7 +1039,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "default",
           "value": "default"
         },
@@ -1061,7 +1074,7 @@
           "type": "prometheus",
           "uid": "feeb4b2d-9c66-4a68-b522-5a35afed51d9"
         },
-        "definition": "label_values(fastapi_app_info{namespace=\"$namespace\"},app_name)",
+        "definition": "label_values({namespace=\"$namespace\"},app_name)",
         "hide": 0,
         "includeAll": false,
         "label": "Application Name",
@@ -1070,7 +1083,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(fastapi_app_info{namespace=\"$namespace\"},app_name)",
+          "query": "label_values({namespace=\"$namespace\"},app_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1082,8 +1095,8 @@
       {
         "current": {
           "selected": false,
-          "text": "fastapi-prometheus-example-64c59875d9-lx98v",
-          "value": "fastapi-prometheus-example-64c59875d9-lx98v"
+          "text": "fastapi-prometheus-example-78654d4dd7-mmpjc",
+          "value": "fastapi-prometheus-example-78654d4dd7-mmpjc"
         },
         "datasource": {
           "type": "prometheus",
@@ -1130,13 +1143,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "FastAPI Observability",
+  "title": "FastAPI&Flask Observability",
   "uid": "fastapi-observability",
-  "version": 11,
+  "version": 25,
   "weekStart": ""
 }

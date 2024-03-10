@@ -1,41 +1,70 @@
+import time
 from flask import request
+from opentelemetry import trace
+from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 from prometheus_client import REGISTRY, Counter, Gauge, Histogram
 
 INFO = Gauge(
-    "flask_app_info", "Flask application information.", [
+    "my_app_info", "Flask application information.", [
         "app_name"]
 )
 REQUESTS = Counter(
-    "flask_requests_total", "Total count of requests by method and path.", [
+    "my_requests_total", "Total count of requests by method and path.", [
         "method", "path", "app_name"]
 )
 RESPONSES = Counter(
-    "flask_responses_total",
+    "my_responses_total",
     "Total count of responses by method, path and status codes.",
     ["method", "path", "status_code", "app_name"],
 )
 REQUESTS_PROCESSING_TIME = Histogram(
-    "flask_requests_duration_seconds",
+    "my_requests_duration_seconds",
     "Histogram of requests processing time by path (in seconds)",
     ["method", "path", "app_name"],
 )
 EXCEPTIONS = Counter(
-    "flask_exceptions_total",
+    "my_exceptions_total",
     "Total count of exceptions raised by path and exception type",
     ["method", "path", "exception_type", "app_name"],
 )
 REQUESTS_IN_PROGRESS = Gauge(
-    "flask_requests_in_progress",
+    "my_requests_in_progress",
     "Gauge of requests by method and path currently being processed",
     ["method", "path", "app_name"],
 )
 
+app_name = "myflask"
+
 def record_request():
-    request.handler = request.path
+    request.path = request.path
+    method = request.method
+
+    REQUESTS_IN_PROGRESS.labels(
+            method=method, path=request.path, app_name=app_name).inc()
+    REQUESTS.labels(method=method, path=request.path, app_name=app_name).inc()
+    before_time = time.perf_counter()
+    request.before_time = before_time
 
 def record_response(response):
     method = request.method
-    status = str(response.status_code // 100) + 'xx'
-    path = request.handler
-    RESPONSES.labels(method=method, status_code=status, path=path, app_name="myflask").inc()
+    path = request.path
+    status_code = response.status_code
+    
+    if status_code == 200:
+        after_time = time.perf_counter()
+        span = trace.get_current_span()
+        trace_id = trace.format_trace_id(
+            span.get_span_context().trace_id)
+
+        REQUESTS_PROCESSING_TIME.labels(method=method, 
+                                        path=path, 
+                                        app_name=app_name).observe(
+                after_time - request.before_time, exemplar={'TraceID': trace_id}
+            )
+    
+    RESPONSES.labels(method=method, path=path,
+                     status_code=status_code,
+                     app_name=app_name).inc()
+    REQUESTS_IN_PROGRESS.labels(
+        method=method, path=path, app_name=app_name).dec()
     return response
