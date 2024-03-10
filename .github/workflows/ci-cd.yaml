@@ -17,7 +17,8 @@ jobs:
         echo $MY_VAR $FIRST_NAME.
 
     - name: Print commit ID
-      run: echo "Commit ID is $(git rev-parse HEAD)"
+      run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_HASH
+
 
   build:
     runs-on: ubuntu-latest
