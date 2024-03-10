@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  my-job:
+  echo-env:
     runs-on: ubuntu-latest
     steps:
     - name: Print a greeting
@@ -26,6 +26,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: app_fastapi/Dockerfile
+        file: ./app_fastapi/Dockerfile
         push: true
         tags: 2108248/fastapi-prometheus-example:v0.0.7.errorhandler
