@@ -24,8 +24,8 @@ jobs:
     - name: check dir
       run: pwd && ls
     - name: set working dir
-      run: cd ./app_fastapi
-      working-directory: ./app_fastapi
+      run: cd /home/runner/work/k8s/k8s/app_fastapi
+      working-directory: /home/runner/work/k8s/k8s/app_fastapi
     - name: check dir
       run: pwd && ls
     - name: Login to Docker Hub
