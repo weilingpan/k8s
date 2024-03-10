@@ -25,6 +25,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
+        context: ./app_fastapi
         push: true
-        file: ./app_fastapi/Dockerfile
+        file: Dockerfile
         tags: 2108248/github-images:fastapi.v0.0.7.errorhandler
