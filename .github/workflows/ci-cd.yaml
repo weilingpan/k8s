@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  my-job:
     runs-on: ubuntu-latest
     steps:
     - name: Print a greeting
@@ -15,3 +15,9 @@ jobs:
         FIRST_NAME: Regina
       run: |
         echo $MY_VAR $FIRST_NAME.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: build image
+      run: |
+        $PWD
