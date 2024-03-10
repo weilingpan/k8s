@@ -25,6 +25,10 @@ async def root():
 async def test():
     return {"test": "ok"}
 
+@app.get("/error")
+async def error():
+    return {"test": "error"}
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
     #uvicorn main:app --reload

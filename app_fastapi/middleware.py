@@ -60,6 +60,8 @@ class PrometheusMiddleware(BaseHTTPMiddleware):
         before_time = time.perf_counter()
         try:
             response = await call_next(request)
+            if path == "/error":
+                raise ValueError("An example exception")
         except BaseException as e:
             status_code = HTTP_500_INTERNAL_SERVER_ERROR
             EXCEPTIONS.labels(method=method, path=path, exception_type=type(
