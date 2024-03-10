@@ -25,14 +25,17 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: check dir
+
+    - name: Check dirs and files
       run: pwd && ls
+
     - name: Login to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
         push: true
-        context: .
+        context: context: "{{defaultContext}}:app_fastapi"
         file: Dockerfile
         tags: 2108248/github-images:fastapi.v0.0.7.errorhandler
