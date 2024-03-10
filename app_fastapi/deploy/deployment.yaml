@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: fastapi-prometheus-example
-        image: fastapi-prometheus-example:latest
+        image: fastapi-prometheus-example:v0.0.7.errorhandler
         imagePullPolicy: Never  # Set imagePullPolicy to Never
         ports:
         - containerPort: 8000

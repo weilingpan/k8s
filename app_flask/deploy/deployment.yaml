@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-prometheus-example
-        image: flask-prometheus-example:latest
+        image: flask-prometheus-example:v0.0.3.errorhandler
         imagePullPolicy: Never  # Set imagePullPolicy to Never
         ports:
         - containerPort: 8000
