@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: check dir
-      run: pwd && ls && cd .. && ls
+      run: pwd && ls && cd .. && pwd && ls
     - name: set working dir
       run: cd app_fastapi
       working-directory: app_fastapi
