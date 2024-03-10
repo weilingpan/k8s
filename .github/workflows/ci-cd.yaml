@@ -22,10 +22,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: check dir
-      run: pwd && ls && cd .. && pwd && ls
+      run: pwd && ls
     - name: set working dir
-      run: cd app_fastapi
-      working-directory: app_fastapi
+      run: cd ./app_fastapi
+      working-directory: ./app_fastapi
     - name: check dir
       run: pwd && ls
     - name: Login to Docker Hub
