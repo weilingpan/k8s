@@ -19,8 +19,9 @@ jobs:
     - name: Show GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
-      
+        GITHUB_SHA: ${{ github.sha }}
+      run: echo "$GITHUB_SHA"
+
   build:
     runs-on: ubuntu-latest
     defaults:
