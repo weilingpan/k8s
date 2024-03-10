@@ -35,6 +35,12 @@ REQUESTS_IN_PROGRESS = Gauge(
 
 app_name = "myflask"
 
+# def handle_exception(e):
+#     method = request.method
+#     path = request.path
+#     EXCEPTIONS.labels(method=method, path=path, exception_type=type(
+#         e).__name__, app_name=app_name).inc()
+
 def record_request():
     request.path = request.path
     method = request.method
