@@ -3,9 +3,11 @@ from fastapi import FastAPI, Response
 # from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
+from utils.logger import keep_log
 from middleware import PrometheusMiddleware, metrics
 
 app = FastAPI()
+logger = keep_log()
 
 # Setup Prometheus metrics
 # Instrumentator().instrument(app).expose(app)
@@ -23,6 +25,7 @@ async def root():
 
 @app.get("/test")
 async def test():
+    logger.info("This is an /test")
     return {"test": "ok"}
 
 @app.get("/error")
