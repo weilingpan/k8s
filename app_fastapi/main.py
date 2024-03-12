@@ -17,6 +17,7 @@ app.add_middleware(PrometheusMiddleware, app_name="myfastapi")
 
 @app.get('/metrics')
 async def metrics():
+    logger.info("This is an /metrics")
     return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 @app.get("/hello")
