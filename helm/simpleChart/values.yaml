@@ -1,2 +1,6 @@
 key1: myvalue1
 key2: myvalue2
+
+service:
+  service1:
+    enabled: true
