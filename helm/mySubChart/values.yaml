@@ -1,0 +1,5 @@
+nginx:
+  fullname: my-nginx
+
+  label:
+    name: nginx
