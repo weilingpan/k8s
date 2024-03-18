@@ -6,3 +6,7 @@ date:
     {{ if eq .Values.key1 "abc"}}is_one_1: true {{- end -}}
     {{ if eq .Values.key1 "abc"}}is_one_2: true {{ else }}is_one_2: false {{ end }}
 kind: ConfigMap
+metadata:
+  name: my-configmap
+  label:
+    {{- include "my-configmap-label" . | nindent 4 }}
