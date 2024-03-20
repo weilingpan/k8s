@@ -4,3 +4,4 @@ metadata:
   name: {{ .Release.Name }}-configmap
 data:
   salad: {{ .Values.global.salad }}
+  version: {{ .Capabilities.KubeVersion.Version }}
