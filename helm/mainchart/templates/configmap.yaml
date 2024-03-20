@@ -5,3 +5,12 @@ metadata:
 data:
   salad: {{ .Values.global.salad }}
   version: {{ .Capabilities.KubeVersion.Version }}
+---
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
+  apiVersions.txt: |
+    {{ .Capabilities.APIVersions }}
