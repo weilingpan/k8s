@@ -1,0 +1,20 @@
+global:
+  salad: caesar
+
+favorite:
+  drink: coffee
+  food: pizza
+pizzaToppings:
+  - mushrooms
+  - cheese
+  - peppers
+  - onions
+
+subchart1:
+  enabled: false
+  dessert: ice cream
+
+dependencies:
+  - name: subchart1
+    repository: charts/subchart1
+    condition: subchart1.enabled
