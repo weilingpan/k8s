@@ -1,0 +1,10 @@
+apiVersion: v2
+name: my-nginx
+description: test helm nginx
+
+version: 0.0.1
+
+
+dependencies:
+  - name: service1
+    condition: service1.enabled

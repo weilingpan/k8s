@@ -1,0 +1,17 @@
+{{- if .Values.service.service1.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        app: "myservice"
+    name: "myservice1"
+    namespace: "default"
+spec:
+    ports:
+    - name: "http"
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+    selector:
+      app: "myservice"
+{{- end }}
