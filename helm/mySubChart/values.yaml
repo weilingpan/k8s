@@ -1,3 +1,6 @@
+global:
+  var1: var1
+
 nginx:
   fullname: my-nginx
 
